@@ -1,0 +1,6 @@
+# compiled output
+/node_modules
+/postgres-data
+.env
+/mysql-data
+/.vscode
