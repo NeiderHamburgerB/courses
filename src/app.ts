@@ -1,5 +1,5 @@
-import orm from './config/database/database.service';
 import app from ".";
+import orm from './config/database/database.service';
 
 const PORT = process.env.PORT || 3000;
 
