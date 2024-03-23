@@ -4,3 +4,4 @@
 .env
 /mysql-data
 /.vscode
+package-lock.json
