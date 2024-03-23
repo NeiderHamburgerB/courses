@@ -14,17 +14,21 @@ Este proyecto utiliza Node.js, Express y TypeScript.
    cd courses
 Instalar Dependencias:
 
-bash
-Copy code
+```bash
 npm install
+```
+
 Configurar el Entorno:
 
-Crea un archivo .env en la raíz del proyecto basado en el .env proporcionado, ajustandos los valores de acuerdo a tu entorno.
-Asegúrate de crear una base de datos según los parámetros definidos en tu archivo .env.
+1. Crea un archivo .env en la raíz del proyecto (usar archivo proporcionado)
+2. Asegúrate de crear una base de datos según los parámetros definidos en tu archivo .env.
+   
 Iniciar en Modo Desarrollo:
 
-bash
-Copy code
+```bash
 npm run start:dev
-
-## link staging swagger: https://biznation-b424460a6bdf.herokuapp.com/api-docs/
+```
+## link staging swagger
+```bash
+https://biznation-b424460a6bdf.herokuapp.com/api-docs/
+```
