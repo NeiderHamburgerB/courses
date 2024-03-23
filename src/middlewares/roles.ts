@@ -7,8 +7,6 @@ export const grantAccess = function(action: any, resource: any) {
 
     return async (req: any, res: Response, next: any) => {
 
-        console.log('Entering grantAccess middleware');
-
         let auth = req.headers['authorization'];
 
         if (!auth) {
@@ -43,7 +41,7 @@ export const grantAccess = function(action: any, resource: any) {
         const permission = roles.can(user.roles)[action](resource);
 
         if (!permission.granted) {
-            console.log('No tiene permiso');
+            console.log('No Authorization');
             return res.status(401).json({
                 err: "Unauthorized"
             }).end();

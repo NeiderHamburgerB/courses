@@ -57,38 +57,47 @@ export class CourseService {
             if (!user || !course) {
                 throw new CustomError('Usuario o curso no encontrado', 400);
             }
+
+            if (user.roles === 'ADMIN') {
+                throw new CustomError('No te puedes unir al curso porque eres un administrador', 400);
+            }
     
             const existingProgress = await ProgressCourse.findOne({
                 where: { course_id, status: 'PROGRESO'},
                 transaction: t
             });
-    
-            if (existingProgress.status === 'PROGRESO') {
-                throw new CustomError('No te puedes unir al curso porque ya se encuentras iniciado.', 400);
-            }
-    
-            const courseProgress = await ProgressCourse.create({
-                user_id,
-                course_id,
-                status: 'PENDIENTE' 
-            }, { transaction: t });
-    
-            const lessons = await Lesson.findAll({
-                where: { course_id },
-                transaction: t
-            });
-    
-            for (const lesson of lessons) {
-                await ProgressLesson.create({
+
+            if(!existingProgress) {
+
+                const courseProgress = await ProgressCourse.create({
                     user_id,
-                    lesson_id: lesson.id,
+                    course_id,
                     status: 'PENDIENTE' 
                 }, { transaction: t });
-            }
-    
-            await t.commit();
-    
-            return courseProgress;
+        
+                const lessons = await Lesson.findAll({
+                    where: { course_id },
+                    transaction: t
+                });
+        
+                for (const lesson of lessons) {
+                    await ProgressLesson.create({
+                        user_id,
+                        lesson_id: lesson.id,
+                        status: 'PENDIENTE' 
+                    }, { transaction: t });
+                }
+
+                await t.commit();
+        
+                return courseProgress;
+
+            }else{
+                if (existingProgress.status === 'PROGRESO') {
+                    throw new CustomError('No te puedes unir al curso porque ya se encuentras iniciado.', 400);
+                }
+            }   
+            
         } catch (error) {
             await t.rollback();
             throw error;
@@ -128,6 +137,7 @@ export class CourseService {
                     model: Lesson,
                     as: 'lessons',
                     attributes: ['id', 'title'],
+                    paranoid: role !== 'ADMIN',
                 }
             ];
 
@@ -147,6 +157,7 @@ export class CourseService {
               limit:take,
               offset:skip,
               distinct: true,
+              paranoid: role !== 'ADMIN',
             });
         
             const coursesData = await Promise.all(courses.rows.map(async (course) => {
@@ -288,7 +299,7 @@ export class CourseService {
             raw: true,
           });
       
-          if (lessonProgress) {
+          if (lessonProgress.status === 'PROGRESO') {
             throw new CustomError(`No se puede eliminar la lección porque tiene progreso asociado.`, 400);
           }
     
@@ -298,7 +309,7 @@ export class CourseService {
             raw: true,
           });
       
-          if (courseProgress) {
+          if (courseProgress.status === 'PROGRESO') {
             throw new CustomError(`No se puede eliminar la lección porque el curso tiene un progreso asociado.`, 400);
           }
       
@@ -328,7 +339,7 @@ export class CourseService {
                 raw: true,
             });
         
-            if (courseProgress) {
+            if (courseProgress.status === 'PROGRESO') {
                 
                 throw new CustomError(`No se puede eliminar el curso porque tiene progreso asociado.`, 400);
                

@@ -1,5 +1,5 @@
 import * as nodemailer from 'nodemailer';
-
+import env from '../environments/env'
 export class MailService {
 
   private mailClient: any;
@@ -15,7 +15,7 @@ export class MailService {
       secure: true, 
       auth: {
         user: 'neider.hamburger@imaginamos.com', 
-        pass: process.env.MAIL_PASSWORD, 
+        pass: env.MAIL_PASSWORD, 
       },
     });
   };

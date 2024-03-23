@@ -13,6 +13,7 @@ import ProgressCourse from '../course-progress/course-progress.entity';
 @Table({
     tableName: 'courses',
     timestamps: true,
+    paranoid: true,
 })
 export default class CoursesEntity extends Model {
 
@@ -41,5 +42,8 @@ export default class CoursesEntity extends Model {
 
     @Column(DataType.BOOLEAN)
     is_active: boolean;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    deletedAt: Date;
 
 }

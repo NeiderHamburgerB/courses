@@ -2,6 +2,7 @@ import { AuthController } from "./auth.controller";
 import { LoginSchema } from "./auth.zod";
 import { Router } from "express";
 import { validateData } from "../../middlewares/valid";
+import { UserSchema } from "../user/user.zod";
 
 export class AuthRoutes {
 
@@ -14,6 +15,7 @@ export class AuthRoutes {
 
     config(): void {
         this.router.post('/login', [validateData(LoginSchema)],this.controller.login.bind(this.controller));
+        this.router.post('/register',[validateData(UserSchema)], this.controller.create.bind(this.controller));
     }
 
 }

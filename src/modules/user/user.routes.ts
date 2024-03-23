@@ -1,7 +1,9 @@
 import { UserController } from "./user.controller";
 import { Router } from "express";
-import { UserSchema } from "./user.zod";
+import { UserSchemaUpdate } from "./user.zod";
 import { validateData } from '../../middlewares/valid';
+import { grantAccess } from "../../middlewares/roles";
+import { ResourcesApp } from "../../config/roles/roles";
 
 export class UserRoutes {
 
@@ -14,11 +16,10 @@ export class UserRoutes {
     }
 
     config(): void {
-        this.router.post('/create',[validateData(UserSchema)],this.controller.create.bind(this.controller));
-        this.router.get('/get-all',this.controller.getAll.bind(this.controller));
-        this.router.get('/get-one/:id',this.controller.getOne.bind(this.controller));
-        this.router.put('/update/:id',[validateData(UserSchema)],this.controller.update.bind(this.controller));
-        this.router.delete('/delete/:id',this.controller.delete.bind(this.controller));
+        this.router.get('/get-all',[grantAccess('readAny', ResourcesApp.USER)],this.controller.getAll.bind(this.controller));
+        this.router.get('/get-one/:id',[grantAccess('readOwn', ResourcesApp.USER)],this.controller.getOne.bind(this.controller));
+        this.router.put('/update/:id',[grantAccess('updateOwn', ResourcesApp.USER)],[validateData(UserSchemaUpdate)],this.controller.update.bind(this.controller));
+        //this.router.delete('/delete/:id',this.controller.delete.bind(this.controller));
     }
 
 }

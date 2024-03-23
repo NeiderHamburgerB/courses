@@ -11,17 +11,6 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  async create(req: Request, res: Response, next: any){
-
-    const [error, user] = await to(this.userService.create(req.body));
-
-    if (error) {
-      return res.status(400).send({ error });
-    }
-
-    return res.status(201).send({ user });
-  }
-
   async getAll(req: Request, res: Response, next: any){
 
     const pageOptionsDto: PageOptionsDto = new PageOptionsDto();

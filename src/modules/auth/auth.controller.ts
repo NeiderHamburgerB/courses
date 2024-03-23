@@ -2,8 +2,16 @@ import { Request, Response } from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { IUser } from "../user/user.zod";
+import { UserService } from "../user/user.service";
+import to from "await-to-js";
 
 export class AuthController {
+  
+  public userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
 
   async login(req: Request, res: Response, next: any) {
 
@@ -36,6 +44,19 @@ export class AuthController {
     })(req, res, next);
 
   }
+
+  async create(req: Request, res: Response, next: any){
+
+    const [error, user] = await to(this.userService.create(req.body));
+
+    if (error) {
+      return res.send({ error });
+    }
+
+    return res.status(201).send({ user });
+  }
+
+
 }
 
 

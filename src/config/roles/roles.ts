@@ -17,13 +17,18 @@ export const roles = (function() {
         .grant(RolesApp.USUARIO)
             .readAny([ResourcesApp.COURSE])
             .readOwn([ResourcesApp.COURSE])
-            
+            .readOwn([ResourcesApp.USER])
+            .updateOwn([ResourcesApp.USER])
+
         .grant(RolesApp.ADMIN)  
             .createAny([ResourcesApp.COURSE])
             .readAny([ResourcesApp.COURSE])
             .readOwn([ResourcesApp.COURSE])
             .updateAny([ResourcesApp.COURSE])
             .deleteAny([ResourcesApp.COURSE])
+            .readAny([ResourcesApp.USER])
+            .readOwn([ResourcesApp.USER])
+
 
     return ac
 })();

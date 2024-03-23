@@ -17,6 +17,18 @@ const UserSchema = z.object({
     roles: z.enum(["ADMIN", "USUARIO"])
 });
 
+const UserSchemaUpdate = z.object({
+    email: z.string().email().optional(),
+    document: z.object({
+        type: z.string().optional(),
+        value: z.string().optional()
+    }).optional(),
+    name: z.string().optional(),
+    last_name: z.string().optional(),
+    password: z.string().optional(),
+    roles: z.enum(["ADMIN", "USUARIO"]).optional()
+});
+
 type UserSchemaCreateDTO = z.infer<typeof UserSchema>;
 
 interface IUser {
@@ -32,4 +44,4 @@ interface IUser {
     roles:string[]
 }
 
-export { IUserSearch, UserSchemaCreateDTO, UserSchema,IUser }
+export { IUserSearch, UserSchemaCreateDTO, UserSchema, IUser, UserSchemaUpdate }

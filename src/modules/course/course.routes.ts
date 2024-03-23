@@ -21,7 +21,7 @@ export class CourseRoutes {
         this.router.get('/get-course-by-id/:id',[grantAccess('readOwn', ResourcesApp.COURSE)],this.controller.getCourseById.bind(this.controller));
         this.router.patch('/update-course-by-id/:id',[grantAccess('updateAny', ResourcesApp.COURSE)],this.controller.update.bind(this.controller));
         this.router.delete('/delete-lesson-by-id/:course_id/:lesson_id',[grantAccess('deleteAny', ResourcesApp.COURSE)],this.controller.deleteLesson.bind(this.controller));
-        this.router.delete('/delete-course-by-id/:id',[grantAccess('deleteAny', ResourcesApp.COURSE)],this.controller.deleteCourse.bind(this.controller));
+        this.router.delete('/delete-course-by-id/:course_id',[grantAccess('deleteAny', ResourcesApp.COURSE)],this.controller.deleteCourse.bind(this.controller));
     }
 
 }

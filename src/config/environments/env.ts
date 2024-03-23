@@ -3,6 +3,7 @@ const {
     DB_NAME, 
     DB_USER,
     DB_PASS,
+    MAIL_PASSWORD
 } = process.env
 
 export default {
@@ -10,4 +11,5 @@ export default {
     DB_NAME, 
     DB_USER,
     DB_PASS,
+    MAIL_PASSWORD
 }
