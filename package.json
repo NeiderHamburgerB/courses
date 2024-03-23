@@ -2,12 +2,12 @@
   "name": "biznation",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start:dev": "nodemon",
     "build": "tsc",
-    "start": "node build/src/index.js",
-    "ts:node": "ts-node src/index.ts",
+    "start": "node build/src/app.js", 
+    "ts:node": "ts-node src/app.ts", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
